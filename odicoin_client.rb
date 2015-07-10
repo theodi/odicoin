@@ -51,65 +51,22 @@ Bitcoin.network = :odicoin
 EM.run do
   defaults = Bitcoin::Node::Node::DEFAULT_CONFIG
   options = Bitcoin::Config.load(defaults, :blockchain)
-  options[:max][:connections_out] = 0
+  options[:max][:connections_out] = 1
   options[:max][:connections_in] = 1
   options[:max][:connections] = 1
   options[:log].each_key {|k| options[:log][k] = :debug }
   
   our_options = {
-    listen: ['127.0.0.1', '6677'],
+    connect: ['127.0.0.1', '6677'],
+    command: ['127.0.0.1', '9998'],
     network: 'odicoin',
-    storage: 'utxo::sqlite:/'
+    storage: 'utxo::sqlite:/',
+    log: {network: :warn}
   }
 
-  options = options.merge(our_options)
+  puts options.merge(our_options).inspect
 #  exit
 
-  their_options = {
-    :network=>:bitcoin,
-    :listen=>["127.0.0.1", "12345"],
-    :connect=>[],
-    :command=>["127.0.0.1", "9999"],
-    :storage=>"utxo::sqlite://~/.bitcoin-ruby/<network>/blocks.db",
-    :announce=>false,
-    :external_port=>nil,
-    :mode=>:full,
-    :cache_head=>true,
-    :index_nhash=>false,
-    :index_p2sh_type=>false,
-    :dns=>true,
-    :epoll_limit=>10000,
-    :epoll_user=>nil,
-    :addr_file=>"~/.bitcoin-ruby/<network>/peers.json",
-    :log=>{
-      :network=>:info,
-      :storage=>:info
-    },
-    :max=>{
-      :connections_out=>8,
-      :connections_in=>32,
-      :connections=>8,
-      :addr=>256,
-      :queue=>501,
-      :inv=>501,
-      :inv_cache=>0,
-      :unconfirmed=>100
-    },
-    :intervals=>{
-      :queue=>1,
-      :inv_queue=>1,
-      :addrs=>5,
-      :connect=>5,
-      :relay=>0,
-      :ping=>90
-    },
-    :import=>nil,
-    :skip_validation=>false,
-    :check_blocks=>1000,
-    :connection_timeout=>10
-  }
-
-  puts options.inspect
-  node = Bitcoin::Node::Node.new(options)
+  node = Bitcoin::Node::Node.new(options.merge(our_options))
   node.run
 end
