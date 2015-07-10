@@ -4,10 +4,28 @@ GIT
   specs:
     bitcoin-ruby-blockchain (0.0.1)
 
+GIT
+  remote: git://github.com/mhanne/bitcoin-ruby-node.git
+  revision: d9a532a8b13aad58adcb212e0a9ea6570fa21fc4
+  specs:
+    bitcoin-ruby-node (0.0.1)
+
+GIT
+  remote: git://github.com/mhanne/bitcoin-ruby-wallet.git
+  revision: 2a3dd39590c5a4dd303507d11dd11114a7a68604
+  specs:
+    bitcoin-ruby-wallet (0.0.1)
+
+GIT
+  remote: git://github.com/mhanne/bitcoin-ruby.git
+  revision: 8c41574118e06d77cea594f87f2276e077a524bc
+  specs:
+    bitcoin-ruby (0.0.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    bitcoin-ruby (0.0.7)
+    eventmachine (1.0.7)
     sequel (4.24.0)
     sqlite3 (1.3.10)
 
@@ -15,7 +33,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bitcoin-ruby
+  bitcoin-ruby!
   bitcoin-ruby-blockchain!
+  bitcoin-ruby-node!
+  bitcoin-ruby-wallet!
+  eventmachine
   sequel
   sqlite3
